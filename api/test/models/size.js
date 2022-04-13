@@ -29,7 +29,6 @@ describe('Size model', () => {
 
     let foundProduct = await Product.findByPk(1, { include: Size });
     expect(foundProduct.dataValues.sizes).to.have.lengthOf(2);
-    // console.log(foundProduct.dataValues.sizes);
   });
 
   it('Cannot add two times the same size to a product', async () => {
@@ -48,7 +47,16 @@ describe('Size model', () => {
 
   it('Cannot add a null size', async () => {
     try {
-      let newSize = await Size.create({});
+      let newSize = await Size.create({ productId: 1 });
+      expect(newSize).to.not.exist();
+    } catch (err) {
+      expect(err.errors[0].type).to.equal('notNull Violation');
+    }
+  });
+
+  it('Cannot add a size without a product', async () => {
+    try {
+      let newSize = await Size.create({ size: 40 });
       expect(newSize).to.not.exist();
     } catch (err) {
       expect(err.errors[0].type).to.equal('notNull Violation');

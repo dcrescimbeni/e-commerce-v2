@@ -22,7 +22,7 @@ OrderDetails.belongsTo(Product, { foreignKey: 'productId' });
 Product.hasMany(Review, { foreignKey: 'productId' });
 Review.belongsTo(Product, { foreignKey: 'productId' });
 
-Product.hasMany(Size, { foreignKey: 'sizeId' });
+Product.hasMany(Size, { foreignKey: 'productId' });
 Size.belongsTo(Product, { foreignKey: 'productId' });
 
 Order.hasMany(OrderDetails, { foreignKey: 'orderId' });
@@ -34,4 +34,4 @@ Order.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Review, { foreignKey: 'userId' });
 Review.belongsTo(User, { foreignKey: 'userId' });
 
-module.exports = { Category, Product, User, Order, OrderDetails, Review };
+module.exports = { Category, Product, User, Order, OrderDetails, Review, Size };

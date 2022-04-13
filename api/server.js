@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const volleyball = require('volleyball');
 const db = require('./config/db');
@@ -27,7 +28,7 @@ app.use(passport.session());
 app.use('/api', route);
 
 app.use((err, req, res, next) => {
-  let enableConsoleLog = true;
+  let enableConsoleLog = false;
 
   if (enableConsoleLog) {
     console.log('Error');

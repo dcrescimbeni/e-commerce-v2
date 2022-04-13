@@ -1,12 +1,12 @@
 require('mocha');
 const chai = require('chai');
 const expect = chai.expect;
-require('../config/db');
-const app = require('../server');
+require('../../config/db');
+const app = require('../../server');
 const supertest = require('supertest');
 const after = require('mocha').after;
 const before = require('mocha').before;
-const { User, Product, Category } = require('../models');
+const { User, Product, Category } = require('../../models');
 let agent;
 
 beforeEach('Initializes supertest', () => {

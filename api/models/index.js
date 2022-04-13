@@ -4,6 +4,7 @@ const User = require('./User');
 const Order = require('./Order');
 const OrderDetails = require('./OrderDetails');
 const Review = require('./Review');
+const Size = require('./Size');
 
 // Relationships
 Product.belongsToMany(Category, {
@@ -20,6 +21,9 @@ OrderDetails.belongsTo(Product, { foreignKey: 'productId' });
 
 Product.hasMany(Review, { foreignKey: 'productId' });
 Review.belongsTo(Product, { foreignKey: 'productId' });
+
+Product.hasMany(Size, { foreignKey: 'sizeId' });
+Size.belongsTo(Product, { foreignKey: 'productId' });
 
 Order.hasMany(OrderDetails, { foreignKey: 'orderId' });
 OrderDetails.belongsTo(Order, { foreignKey: 'orderId' });

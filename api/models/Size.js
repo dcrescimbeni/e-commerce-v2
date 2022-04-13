@@ -1,25 +1,21 @@
 const { DataTypes, Model } = require('sequelize');
 const db = require('../config/db');
 
-class OrderDetails extends Model {}
+class Size extends Model {}
 
-OrderDetails.init(
+Size.init(
   {
-    orderDetailsId: {
+    sizeId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    price: {
+    size: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
-  { sequelize: db, modelName: 'orderDetails' }
+  { sequelize: db, modelName: 'sizes' }
 );
 
-module.exports = OrderDetails;
+module.exports = Size;

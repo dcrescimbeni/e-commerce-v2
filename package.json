@@ -45,11 +45,11 @@
   },
   "scripts": {
     "start": "concurrently 'npm run server' 'npm run client'",
-    "server": "nodemon api/server.js",
-    "client": "react-scripts start",
+    "server": "NODE_ENV=prod nodemon api/server.js",
+    "client": "NODE_ENV=prod react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test-back": "mocha api/test --watch",
+    "test": "NODE_ENV=test react-scripts test",
+    "test-back": "NODE_ENV=test mocha api/test --watch --recursive",
     "eject": "react-scripts eject",
     "seed": "node api/models/seed.js"
   },

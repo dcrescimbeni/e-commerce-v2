@@ -4,6 +4,7 @@ const User = require('./User');
 const Order = require('./Order');
 const OrderDetails = require('./OrderDetails');
 const Review = require('./Review');
+const Size = require('./Size');
 
 // Relationships
 Product.belongsToMany(Category, {
@@ -21,6 +22,9 @@ OrderDetails.belongsTo(Product, { foreignKey: 'productId' });
 Product.hasMany(Review, { foreignKey: 'productId' });
 Review.belongsTo(Product, { foreignKey: 'productId' });
 
+Product.hasMany(Size, { foreignKey: 'productId' });
+Size.belongsTo(Product, { foreignKey: 'productId' });
+
 Order.hasMany(OrderDetails, { foreignKey: 'orderId' });
 OrderDetails.belongsTo(Order, { foreignKey: 'orderId' });
 
@@ -30,4 +34,4 @@ Order.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Review, { foreignKey: 'userId' });
 Review.belongsTo(User, { foreignKey: 'userId' });
 
-module.exports = { Category, Product, User, Order, OrderDetails, Review };
+module.exports = { Category, Product, User, Order, OrderDetails, Review, Size };

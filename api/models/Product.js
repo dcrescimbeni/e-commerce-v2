@@ -18,17 +18,6 @@ Product.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    color: {
-      type: DataTypes.STRING,
-    },
-    size: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    stock: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     img: {
       type: DataTypes.ARRAY(DataTypes.TEXT),
     },

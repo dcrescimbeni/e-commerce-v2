@@ -1,7 +1,6 @@
 // Users
 let users = [
   {
-    // ID: 1
     userId: 1,
     email: 'admin@admin.com',
     password: '123',
@@ -12,7 +11,6 @@ let users = [
     shippingAddress: 'Not so Important Building 123',
   },
   {
-    // ID: 2
     userId: 2,
     email: 'user@user.com',
     password: '123',
@@ -23,7 +21,6 @@ let users = [
     shippingAddress: 'Neighbours house 321',
   },
   {
-    // ID: 3
     userId: 3,
     email: 'pharetra.nam@icloud.couk',
     password: 'CLU85YKG1IO',
@@ -34,7 +31,6 @@ let users = [
     shippingAddress: '157-812 Nisl Road',
   },
   {
-    // ID: 4
     userId: 4,
     email: 'taciti.sociosqu@aol.net',
     password: 'VUH43RDE7YE',
@@ -45,7 +41,6 @@ let users = [
     shippingAddress: '451-6556 Pellentesque St.',
   },
   {
-    // ID: 5
     userId: 5,
     email: 'ac.urna@google.edu',
     password: 'KEA66UKB1YG',
@@ -56,7 +51,6 @@ let users = [
     shippingAddress: 'P.O. Box 581, 4491 Accumsan Road',
   },
   {
-    // ID: 6
     userId: 6,
     email: 'nec@icloud.net',
     password: 'ACQ37IVL9KO',
@@ -67,7 +61,6 @@ let users = [
     shippingAddress: '315-4089 Elit, Rd.',
   },
   {
-    // ID: 7
     userId: 7,
     email: 'tempor@google.net',
     password: 'LWF18IEV6MY',

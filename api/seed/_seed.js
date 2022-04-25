@@ -8,6 +8,7 @@ const {
 } = require('../models/index');
 
 const users = require('./users');
+const products = require('./products');
 
 const seedDatabase = async () => {
   // ! Force sync
@@ -19,10 +20,14 @@ const seedDatabase = async () => {
   await User.bulkCreate(users, { individualHooks: true });
   console.log('Users created');
 
+  await Product.bulkCreate(products);
+  console.log('Products created');
+
   return;
 };
 
 seedDatabase();
+
 // const seedDatabase = async () => {
 //   await Promise.all(
 //     users.map(async (user) => {

@@ -1,5 +1,6 @@
 const Products = require('../models/Product');
 const Category = require('../models/Category');
+const Review = require('../models/Review');
 const { Op } = require('sequelize');
 
 exports.allProducts = async (req, res, next) => {
@@ -16,7 +17,8 @@ exports.productFind = async (req, res, next) => {
     let product = await Products.findOne({
       where: {
         productId: req.params.id,
-      }, include: Category
+      },
+      include: [Category, Review],
     });
 
     res.send(product.dataValues);

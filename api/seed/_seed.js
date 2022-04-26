@@ -3,12 +3,14 @@ const {
   User,
   Product,
   Category,
+  Review,
   Order,
   OrderDetails,
 } = require('../models/index');
 
 const users = require('./users');
 const products = require('./products');
+const reviews = require('./reviews');
 const { categories, categoriesRelationships } = require('./categories');
 
 const seedDatabase = async () => {
@@ -27,34 +29,18 @@ const seedDatabase = async () => {
   await Category.bulkCreate(categories);
   console.log('Categories created');
 
-  await categoriesRelationships.forEach(async (relationship) => {
+  categoriesRelationships.forEach(async (relationship) => {
     await assignCategory(relationship);
   });
   console.log('Relationships created');
+
+  await Review.bulkCreate(reviews);
+  console.log('Reviews created');
 
   return;
 };
 
 seedDatabase();
-
-// const seedDatabase = async () => {
-//   await Promise.all(
-//     users.map(async (user) => {
-//       return await User.create(user);
-//     })
-//   );
-
-//   // await Product.bulkCreate(products);
-//   await Category.bulkCreate(categories);
-
-//   await Promise.all(
-//     categoriesRelationships.map(async (relationship) => {
-//       return await assignCategory(relationship);
-//     })
-//   );
-
-//   console.log('Database seeded!');
-// };
 
 async function assignCategory(relationship) {
   let product = await Product.findByPk(relationship.productId);

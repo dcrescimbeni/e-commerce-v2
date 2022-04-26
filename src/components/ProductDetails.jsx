@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/ProductDetails.module.css';
-import { Card, Button, Carousel, ListGroup, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card, Button, Carousel } from 'react-bootstrap';
 import axios from 'axios';
 import NavBar from './NavBar';
 
@@ -21,14 +20,27 @@ const ProductDetails = ({ onAdd }) => {
 
   const [productInfo, setProductInfo] = useState({});
 
+  function calculateReviewScore(reviews) {
+    let reviewScoreSum = 0;
+    if (reviews.length > 0) {
+      reviewScoreSum = reviews.reduce((scoreSum, currentReview) => {
+        return scoreSum + currentReview.score;
+      }, 0);
+    }
+
+    let scoreAverage = Math.round(reviewScoreSum / reviews.length);
+    console.log(scoreAverage);
+    return scoreAverage;
+  }
+
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/products/product/${productID}`)
       .then((res) => {
-        // console.log(res.data)
         setProductInfo(res.data);
+        calculateReviewScore(res.data.reviews);
       });
-  }, []);
+  }, [productID]);
 
   if (!productInfo.img) return <div></div>;
   return (
@@ -36,9 +48,9 @@ const ProductDetails = ({ onAdd }) => {
       <NavBar />
       <div className={styles.container}>
         <Carousel className={styles.image} fade variant="dark">
-          {productInfo.img.map((imgSource) => {
+          {productInfo.img.map((imgSource, index) => {
             return (
-              <Carousel.Item>
+              <Carousel.Item key={index}>
                 <img
                   className="d-block w-100"
                   src={imgSource}

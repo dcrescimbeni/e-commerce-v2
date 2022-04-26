@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import './App.css';
 import HomePage from './Pages/HomePage';
-import NavBar from './components/NavBar';
 import ProductsList from './components/ProductsList';
 import ProductDetails from './components/ProductDetails';
 import ShoppingCart from './Pages/ShoppingCart';
@@ -43,7 +42,6 @@ function App() {
   });
 
   useEffect(() => {
-    console.log(`Buscando products...`);
     axios
       .get('/api/products/allProducts')
       .then((res) => res.data)
@@ -58,8 +56,6 @@ function App() {
   useEffect(() => {
     dispatch(getSession());
   }, [dispatch]);
-
-  console.log('Este es el usuario', user.userId);
 
   const onAdd = (product) => {
     const exist = cartItems.find((x) => x.productId === product.productId);

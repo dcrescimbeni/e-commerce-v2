@@ -155,7 +155,7 @@ function App() {
           <Route path="/products/edit/:id" element={<ProductEdit />} />
         </Routes>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -58,7 +58,7 @@ const ProductsList = () => {
                   ></img>{' '}
                 </Link>
                 <div className={styles.name}>{product.name}</div>
-                <div>{`${product.price} €`}</div>
+                <div>{`$${product.price}`}</div>
               </div>
             );
           })}

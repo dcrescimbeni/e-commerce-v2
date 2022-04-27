@@ -19,7 +19,8 @@ exports.userLogout = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-  req.isAuthenticated();
+  console.log('getUsers');
+  console.log(req.isAuthenticated());
   if (!req.user) res.sendStatus(401);
   else {
     res.send(req.user);

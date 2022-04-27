@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import styles from "../styles/UsersList.module.css";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import styles from '../styles/UsersList.module.css';
 
 const UsersList = () => {
   const [usersList, setUsersList] = useState();
 
   useEffect(() => {
     axios
-      .get("/api/users/all")
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/users/all`)
       .then((res) => res.data)
       .then((users) => setUsersList(users));
   }, []);
@@ -19,12 +19,12 @@ const UsersList = () => {
 
   const handleDelete = (e, userId) => {
     e.preventDefault();
-    axios.delete(`/api/users/delete/${userId}`).then(() => {
-      const newUsersList = usersList.filter(
-        (user) => user.userId !== userId
-      );
-      setUsersList(newUsersList);
-    });
+    axios
+      .delete(`${process.env.REACT_APP_SERVER_URL}/api/users/delete/${userId}`)
+      .then(() => {
+        const newUsersList = usersList.filter((user) => user.userId !== userId);
+        setUsersList(newUsersList);
+      });
   };
 
   return (

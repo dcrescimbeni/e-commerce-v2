@@ -1,24 +1,26 @@
 require('dotenv').config();
 const express = require('express');
 const volleyball = require('volleyball');
-const db = require('./config/db');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+const db = require('./config/db');
 const route = require('./routes');
-const cors = require('cors');
 require('./config/auth');
+const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ credentials: 'include', origin: true }));
 
 app.use(volleyball);
 app.use(express.json());
 
-app.use(cookieParser());
 app.use(
-  session({ secret: 'bootcamp', resave: false, saveUninitialized: true })
+  session({
+    secret: 'bootcamp',
+    resave: false,
+    saveUninitialized: true,
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());

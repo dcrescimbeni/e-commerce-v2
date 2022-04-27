@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import  axios  from "axios";
-import useInput from "../Hooks/useInputs";
-import {Button} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useInput from '../Hooks/useInputs';
+import { Button } from 'react-bootstrap';
 
 const UsersManagement = () => {
   //obtener id del usuario a partir de la url
   let currentURL = window.location.href;
-  let arrayURL = currentURL.split("/");
+  let arrayURL = currentURL.split('/');
   let reducedURL = [];
 
   for (let i = 0; i < arrayURL.length; i++) {
@@ -22,22 +22,20 @@ const UsersManagement = () => {
 
   const [userInfo, setUserInfo] = useState();
 
-useEffect(() => {
-  axios.
-  get(`/api/users/user/${userId}`)
-  .then((res) => 
-    res.data
-  )
-  .then((user) => {setUserInfo(user)
-  firstName.setValue(user.firstName)
-  lastName.setValue(user.lastName)
-  email.setValue(user.email)
-  billingAddress.setValue(user.billingAddress)
-  shippingAddress.setValue(user.shippingAddress)
-  setAdmin(user.isAdmin)
-})
-}, [])
-
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/users/user/${userId}`)
+      .then((res) => res.data)
+      .then((user) => {
+        setUserInfo(user);
+        firstName.setValue(user.firstName);
+        lastName.setValue(user.lastName);
+        email.setValue(user.email);
+        billingAddress.setValue(user.billingAddress);
+        shippingAddress.setValue(user.shippingAddress);
+        setAdmin(user.isAdmin);
+      });
+  }, []);
 
   //axios para editar usuario
 
@@ -47,36 +45,34 @@ useEffect(() => {
   const billingAddress = useInput();
   const shippingAddress = useInput();
 
-
   //setAdmin
   const [admin, setAdmin] = useState(false);
 
   const handleChange = (e) => {
-    e.preventDefault()
-    setAdmin(!admin)
-  }
-  
+    e.preventDefault();
+    setAdmin(!admin);
+  };
 
   //edit user
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-      e.preventDefault();
+    e.preventDefault();
     axios
-    .put(`/api/users/edit/${userId}`, {
+      .put(`${process.env.REACT_APP_SERVER_URL}/api/users/edit/${userId}`, {
         firstName: firstName.value,
         lastName: lastName.value,
         email: email.value,
         billingAddress: billingAddress.value,
         shippingAddress: shippingAddress.value,
-        isAdmin: admin
-    })
-    .then((res) => res.data)
-    .then((editedUser) => console.log(editedUser))
-    navigate("/usersManagement")
+        isAdmin: admin,
+      })
+      .then((res) => res.data)
+      .then((editedUser) => console.log(editedUser));
+    navigate('/usersManagement');
   };
 
-  if (!userInfo) return <div></div>
+  if (!userInfo) return <div></div>;
 
   return (
     <>
@@ -148,7 +144,9 @@ useEffect(() => {
                 <div className="form-check">
                   <input
                     defaultChecked={userInfo.isAdmin}
-                    onChange={(e) => {handleChange(e)}}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     className="form-check-input"
                     type="checkbox"
                     id="gridCheck"
@@ -159,7 +157,9 @@ useEffect(() => {
                 </div>
               </div>
               <div className="col-12 modal-footer">
-              <Link to="/usersManagement"><Button variant="primary">Back</Button>{' '}</Link>
+                <Link to="/usersManagement">
+                  <Button variant="primary">Back</Button>{' '}
+                </Link>
                 <button type="submit" className="btn btn-primary pe-2">
                   Accept
                 </button>

@@ -1,7 +1,7 @@
-const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const { User } = require('../models');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
+const { User } = require('../models');
 
 const verifyCallback = (email, password, done) => {
   User.findOne({ where: { email } })

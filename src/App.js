@@ -28,6 +28,7 @@ import Profile from './Pages/Profile';
 import PurchaseHistory from './Pages/PurchaseHistory.jsx';
 import NewProduct from './Pages/NewProduct';
 import ProductEdit from './Pages/ProductEdit';
+import NavBar from './components/NavBar';
 
 function App() {
   const locaStorageProducts =
@@ -47,7 +48,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('/api/products/allProducts')
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/products/allProducts`)
       .then((res) => res.data)
       .then((items) => {
         setProducts(items);
@@ -98,6 +99,7 @@ function App() {
 
   return (
     <div>
+      <NavBar />
       <main>
         <Routes>
           <Route
@@ -157,6 +159,7 @@ function App() {
       </main>
       {/* <Footer /> */}
     </div>
+    // </ThemeProvider>
   );
 }
 

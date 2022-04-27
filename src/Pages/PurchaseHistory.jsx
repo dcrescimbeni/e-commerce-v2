@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { Table } from "react-bootstrap";
-import axios from "axios";
-import NavBar from "../components/NavBar";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { Table } from 'react-bootstrap';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const PurchaseHistory = () => {
   const [orders, setOrders] = useState();
@@ -11,17 +10,16 @@ const PurchaseHistory = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/users/userOrders/${id}`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/users/userOrders/${id}`)
       .then((res) => setOrders(res.data));
   }, []);
 
-  console.log("orders =>", orders);
+  console.log('orders =>', orders);
   return (
     <div>
       <br />
       <br />
       <br />
-      <NavBar />
       <br />
 
       <h2>
@@ -45,21 +43,21 @@ const PurchaseHistory = () => {
           </thead>
           <tbody>
             {orders?.map((order) => {
-              return order.orderDetails?.map(product => {
+              return order.orderDetails?.map((product) => {
                 return (
-                  <tr>  
+                  <tr>
                     <td>
-                      {" "}
+                      {' '}
                       <AiOutlineShoppingCart />
                     </td>
                     {/* {Product.price} */}
                     <td>{order.orderId}</td>
                     <td>{product.name}</td>
-                    <td>{product.createdAt.substring(0,10)}</td>
+                    <td>{product.createdAt.substring(0, 10)}</td>
                     <td>${product.price}</td>
                   </tr>
                 );
-              })
+              });
             })}
           </tbody>
         </Table>

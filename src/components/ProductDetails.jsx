@@ -55,7 +55,9 @@ const ProductDetails = ({ onAdd }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/products/product/${productID}`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productID}`
+      )
       .then((res) => {
         setProductInfo(res.data);
         let reviewScore = calculateReviewScore(res.data.reviews);
@@ -106,10 +108,18 @@ const ProductDetails = ({ onAdd }) => {
               <Divider />
               <br />
               <Typography variant="h4">Reviews</Typography>
-              <Button color="secondary" onClick={handleClickOpen}>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={handleClickOpen}
+              >
                 Write a review
               </Button>
-              <WriteReview openDialog={openDialog} handleClose={handleClose} />
+              <WriteReview
+                openDialog={openDialog}
+                handleClose={handleClose}
+                productId={productID}
+              />
               {productInfo.reviews.map((review, index) => {
                 return (
                   <Container key={index} sx={{ marginTop: 4 }}>

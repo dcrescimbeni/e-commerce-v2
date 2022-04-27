@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import WriteReview from './WriteReview';
 
 import {
   Rating,
@@ -13,6 +13,7 @@ import {
   CardContent,
   Divider,
 } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const ProductDetails = ({ onAdd }) => {
   //obtener id del producto a partir de la url
@@ -30,6 +31,15 @@ const ProductDetails = ({ onAdd }) => {
 
   const [productInfo, setProductInfo] = useState({});
   const [rating, setRating] = useState(0);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
 
   function calculateReviewScore(reviews) {
     let reviewScoreSum = 0;
@@ -96,6 +106,10 @@ const ProductDetails = ({ onAdd }) => {
               <Divider />
               <br />
               <Typography variant="h4">Reviews</Typography>
+              <Button color="secondary" onClick={handleClickOpen}>
+                Write a review
+              </Button>
+              <WriteReview openDialog={openDialog} handleClose={handleClose} />
               {productInfo.reviews.map((review, index) => {
                 return (
                   <Container key={index} sx={{ marginTop: 4 }}>

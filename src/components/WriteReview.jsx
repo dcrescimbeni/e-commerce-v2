@@ -1,33 +1,42 @@
-import React from "react";
-import { Form, Button } from "react-bootstrap";
-import styles from "../styles/WriteReview.module.css";
-import StarRating from "./StarRating";
+import React from 'react';
+import {
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Rating,
+  TextField,
+} from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
-
-const WriteReview = () => {
-
+const WriteReview = ({ openDialog, handleClose }) => {
+  const handleSendReview = () => {
+    console.log('review sent!');
+    handleClose();
+  };
 
   return (
-    <div className={`container ${styles.container}`}>
-      <div className="row">
-      <Form className="call-lg-6 offset-lg-3">
-      <StarRating className={styles.star}/>
-      <br></br>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Review</Form.Label>
-          <Form.Control
-            className={styles.commentInput}
-            type="text"
-            as="textarea"
-            placeholder="Escriba su reseña"
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Enviar
-        </Button>
-      </Form>
-      </div>
-    </div>
+    <Dialog open={openDialog} onClose={handleClose}>
+      <Container sx={{ marginBottom: 3 }}>
+        <DialogTitle>Write a review</DialogTitle>
+        <DialogContent>
+          <Rating />
+          <TextField fullWidth label="Review" sx={{ marginTop: 3 }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button
+            onClick={handleSendReview}
+            variant="contained"
+            endIcon={<SendIcon />}
+          >
+            Send
+          </Button>
+        </DialogActions>
+      </Container>
+    </Dialog>
   );
 };
 

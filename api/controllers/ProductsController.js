@@ -44,6 +44,27 @@ exports.productFindCategory = async (req, res, next) => {
   }
 };
 
+exports.writeReview = async (req, res, next) => {
+  let reviewData = {};
+
+  try {
+    reviewData.productId = req.params.productId;
+    reviewData.reviewMessage = req.body.reviewMessage;
+    reviewData.score = req.body.score;
+    reviewData.userId = req.user.dataValues.userId;
+
+    await Review.create(reviewData);
+
+    res.send(200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+//
+// Admin routes
+//
+
 exports.newProduct = async (req, res, next) => {
   // Parsing of images passed as strings
   if (typeof req.body.img === 'string') {

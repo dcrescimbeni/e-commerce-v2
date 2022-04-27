@@ -13,6 +13,12 @@ const products = require('./products');
 const reviews = require('./reviews');
 const { categories, categoriesRelationships } = require('./categories');
 
+async function sequentialCreate(model, data) {
+  data.forEach(async (row) => {
+    await model.create(row);
+  });
+}
+
 const seedDatabase = async () => {
   // ! Force sync
   let forceSync = true;
@@ -34,7 +40,9 @@ const seedDatabase = async () => {
   });
   console.log('Relationships created');
 
-  await Review.bulkCreate(reviews);
+  sequentialCreate(Review, reviews);
+
+  // await Review.bulkCreate(reviews, { hooks: true, individualHooks: true });
   console.log('Reviews created');
 
   return;

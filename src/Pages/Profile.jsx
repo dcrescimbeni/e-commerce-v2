@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import NavBar from '../components/NavBar';
 import useInput from '../Hooks/useInputs';
 import axios from 'axios';
 
@@ -22,11 +21,12 @@ const Profile = () => {
     email.setValue(user.email);
     billingAddress.setValue(user.billingAddress);
     shippingAddress.setValue(user.shippingAddress);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`/api/users/details`, {
+    axios.put(`${process.env.REACT_APP_SERVER_URL}/api/users/details`, {
       firstName: firstName.value,
     });
   };
@@ -35,7 +35,6 @@ const Profile = () => {
 
   return (
     <div>
-      <NavBar />
       <br />
       <br />
       <br />

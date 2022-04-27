@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import useInput from "../Hooks/useInputs";
-import {Button} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useInput from '../Hooks/useInputs';
+import { Button } from 'react-bootstrap';
 
 const ProductEdit = () => {
   //obtener id del usuario a partir de la url
   let currentURL = window.location.href;
-  let arrayURL = currentURL.split("/");
+  let arrayURL = currentURL.split('/');
   let reducedURL = [];
 
   for (let i = 0; i < arrayURL.length; i++) {
@@ -24,7 +24,9 @@ const ProductEdit = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/products/product/${productId}`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productId}`
+      )
       .then((res) => res.data)
       .then((product) => {
         setProductInfo(product);
@@ -52,16 +54,19 @@ const ProductEdit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`/api/products/product/${productId}`, {
-        name: productName.value,
-        price: price.value,
-        color: color.value,
-        size: size.value,
-        stock: stock.value,
-        description: description.value,
-      })
+      .put(
+        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productId}`,
+        {
+          name: productName.value,
+          price: price.value,
+          color: color.value,
+          size: size.value,
+          stock: stock.value,
+          description: description.value,
+        }
+      )
       .then((res) => res.data);
-      navigate("/productsManagement")
+    navigate('/productsManagement');
   };
 
   if (!productInfo) return <div></div>;
@@ -151,7 +156,9 @@ const ProductEdit = () => {
                 />
               </div>
               <div className="col-12 modal-footer">
-              <Link to="/productsManagement"><Button variant="primary">Back</Button>{' '}</Link>
+                <Link to="/productsManagement">
+                  <Button variant="primary">Back</Button>{' '}
+                </Link>
                 <button type="submit" className="btn btn-primary pe-2">
                   Accept
                 </button>

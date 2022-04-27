@@ -1,7 +1,7 @@
-const User = require("../models/User");
-const nodemailer = require("nodemailer");
-const { transport } = require("../config/email");
-const { Order, OrderDetails } = require("../models");
+const User = require('../models/User');
+const nodemailer = require('nodemailer');
+const { transport } = require('../config/email');
+const { Order, OrderDetails } = require('../models');
 
 exports.userCreate = (req, res, next) => {
   User.create(req.body)
@@ -9,22 +9,18 @@ exports.userCreate = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-// exports.userLoginOAuth = (req,res,next) => {
-//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out')
-//   .catch(err => next(err));
-// }
-
 exports.userLogin = (req, res, next) => {
   res.send(req.user);
 };
 
 exports.userLogout = (req, res, next) => {
   req.logout();
-  res.redirect("/").catch((err) => next(err));
+  res.redirect('/').catch((err) => next(err));
 };
 
 exports.getUser = (req, res, next) => {
-  req.isAuthenticated();
+  console.log('getUsers');
+  console.log(req.isAuthenticated());
   if (!req.user) res.sendStatus(401);
   else {
     res.send(req.user);
@@ -87,19 +83,19 @@ exports.giveAdmin = (req, res, next) => {
 };
 
 exports.sendEmail = (req, res, next) => {
-  console.log('llegue a mail' )
+  console.log('llegue a mail');
   async function main() {
     let mailOptions = {
       from: '"SNikers 👻" <fabriberdina@gmail.com>', // sender address
       to: req.body.email, // list of receivers
-      subject: "Su Pedido ha sido realizado ✔", // Subject line
-      html: "<b>Gracias por su compra en SNikers</b>", // html body
+      subject: 'Su Pedido ha sido realizado ✔', // Subject line
+      html: '<b>Gracias por su compra en SNikers</b>', // html body
     };
 
     let info = await transport.sendMail(mailOptions, (err, info) => {
       if (err) res.status(500).send(err.message);
       else {
-        console.log("email enviado");
+        console.log('email enviado');
         res.send(200);
       }
     });
@@ -107,14 +103,14 @@ exports.sendEmail = (req, res, next) => {
   main().catch(console.error);
 };
 
-
 exports.getOrders = (req, res, next) => {
-  
-  Order.findAll({ include : OrderDetails , where: { userId: req.params.id }})
-    .then((data) => {
-      res.send(data)
-    })
-  }
+  Order.findAll({
+    include: OrderDetails,
+    where: { userId: req.params.id },
+  }).then((data) => {
+    res.send(data);
+  });
+};
 
 // exports.getOrders = (req,res,next) => {
 //   Order.findAll({where: { userId: req.params.id }})
@@ -122,7 +118,6 @@ exports.getOrders = (req, res, next) => {
 //     res.send(data)
 //   })
 // }
-
 
 // Admin controllers
 
@@ -165,7 +160,6 @@ exports.editUser = async (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  
   let adminId = req.user.dataValues.userId;
   let userId = parseInt(req.params.id);
 

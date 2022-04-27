@@ -3,9 +3,13 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 import './App.css';
 import HomePage from './Pages/HomePage';
-import NavBar from './components/NavBar';
 import ProductsList from './components/ProductsList';
 import ProductDetails from './components/ProductDetails';
 import ShoppingCart from './Pages/ShoppingCart';
@@ -24,9 +28,9 @@ import Profile from './Pages/Profile';
 import PurchaseHistory from './Pages/PurchaseHistory.jsx';
 import NewProduct from './Pages/NewProduct';
 import ProductEdit from './Pages/ProductEdit';
+import NavBar from './components/NavBar';
 
 function App() {
-  // const { products } = data;
   const locaStorageProducts =
     JSON.parse(localStorage.getItem('cart-products')) || [];
   const [cartItems, setCartItems] = useState(locaStorageProducts);
@@ -43,9 +47,8 @@ function App() {
   });
 
   useEffect(() => {
-    console.log(`Buscando products...`);
     axios
-      .get('/api/products/allProducts')
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/products/allProducts`)
       .then((res) => res.data)
       .then((items) => {
         setProducts(items);
@@ -58,8 +61,6 @@ function App() {
   useEffect(() => {
     dispatch(getSession());
   }, [dispatch]);
-
-  console.log('Este es el usuario', user.userId);
 
   const onAdd = (product) => {
     const exist = cartItems.find((x) => x.productId === product.productId);
@@ -98,6 +99,7 @@ function App() {
 
   return (
     <div>
+      <NavBar />
       <main>
         <Routes>
           <Route
@@ -155,8 +157,9 @@ function App() {
           <Route path="/products/edit/:id" element={<ProductEdit />} />
         </Routes>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
+    // </ThemeProvider>
   );
 }
 

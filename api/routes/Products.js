@@ -4,12 +4,10 @@ const ProductsController = require('../controllers/ProductsController');
 const { isAuth, isAdmin } = require('../utils/authCheck');
 
 router.get('/allProducts', ProductsController.allProducts);
-
 router.get('/allProducts/:id', ProductsController.productFindCategory);
-
 router.get('/product/:id', ProductsController.productFind);
-
 router.get('/search', ProductsController.searchProduct);
+router.post('/product/:productId/review', ProductsController.writeReview);
 
 // Admin routes
 

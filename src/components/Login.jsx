@@ -11,7 +11,6 @@ import { GiConverseShoe } from 'react-icons/gi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
 import style from '../styles/Login.module.css';
-import axios from 'axios';
 import { getSession } from '../state/user';
 
 const Login = () => {

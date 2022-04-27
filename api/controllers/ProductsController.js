@@ -1,8 +1,11 @@
 const Products = require('../models/Product');
 const Category = require('../models/Category');
+const Review = require('../models/Review');
 const { Op } = require('sequelize');
 
 exports.allProducts = async (req, res, next) => {
+  req.isAuthenticated();
+  console.log('all products ', req.user);
   try {
     let products = await Products.findAll({ include: Category });
     res.send(products);
@@ -16,7 +19,8 @@ exports.productFind = async (req, res, next) => {
     let product = await Products.findOne({
       where: {
         productId: req.params.id,
-      }, include: Category
+      },
+      include: [Category, Review],
     });
 
     res.send(product.dataValues);
@@ -41,6 +45,27 @@ exports.productFindCategory = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.writeReview = async (req, res, next) => {
+  let reviewData = {};
+
+  try {
+    reviewData.productId = req.params.productId;
+    reviewData.reviewMessage = req.body.reviewMessage;
+    reviewData.score = req.body.score;
+    reviewData.userId = 1;
+
+    await Review.create(reviewData);
+
+    res.send(200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+//
+// Admin routes
+//
 
 exports.newProduct = async (req, res, next) => {
   // Parsing of images passed as strings

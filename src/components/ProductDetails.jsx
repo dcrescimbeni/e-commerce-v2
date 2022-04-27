@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/ProductDetails.module.css';
-import { Card, Button, Carousel, ListGroup, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import NavBar from './NavBar';
+import WriteReview from './WriteReview';
+
+import {
+  Rating,
+  Grid,
+  Container,
+  Typography,
+  Button,
+  Paper,
+  Card,
+  CardContent,
+  Divider,
+} from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const ProductDetails = ({ onAdd }) => {
   //obtener id del producto a partir de la url
@@ -20,74 +30,113 @@ const ProductDetails = ({ onAdd }) => {
   let productID = parseInt(reducedURL);
 
   const [productInfo, setProductInfo] = useState({});
+  const [rating, setRating] = useState(0);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
+
+  function calculateReviewScore(reviews) {
+    let reviewScoreSum = 0;
+    if (reviews.length > 0) {
+      reviewScoreSum = reviews.reduce((scoreSum, currentReview) => {
+        return scoreSum + currentReview.score;
+      }, 0);
+    }
+
+    let scoreAverage = Math.round(reviewScoreSum / reviews.length);
+    return scoreAverage;
+  }
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/products/product/${productID}`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productID}`
+      )
       .then((res) => {
-        // console.log(res.data)
         setProductInfo(res.data);
+        let reviewScore = calculateReviewScore(res.data.reviews);
+        setRating(reviewScore);
       });
-  }, []);
+  }, [productID]);
 
   if (!productInfo.img) return <div></div>;
-  return (
-    <div>
-      <NavBar />
-      <div className={styles.container}>
-        <Carousel className={styles.image} fade variant="dark">
-          {productInfo.img.map((imgSource) => {
-            return (
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src={imgSource}
-                  alt="First slide"
-                />
-              </Carousel.Item>
-            );
-          })}
-        </Carousel>
 
-        <div className={styles.card}>
-          <Card style={{ width: '30rem', height: '40rem' }}>
-            <Card.Body>
-              <br></br>
-              <Card.Title className={styles.name}>
-                {productInfo['name']}{' '}
-                {/* <Link to="/writeReview">
-                  <Button variant="warning">Write review</Button>
-                </Link> */}
-              </Card.Title>
-              <br></br>
-              <br></br>
-              <Card.Text className={styles.description}>
-                {productInfo['description']}
-              </Card.Text>
-              <br></br>
-              <Card.Text
-                className={styles.description}
-              >{`${productInfo['price']} € `}</Card.Text>
-              <br></br>
-              <br></br>
-              <div className={styles.buttonsContainer}>
-                <Button variant="dark" onClick={() => onAdd(productInfo)}>
+  return (
+    <Container>
+      <Paper elevation={1} sx={{ paddingTop: 3, paddingBottom: 3 }}>
+        <Grid container justifyContent="center" spacing={5}>
+          <Grid item xs={12} md={6}>
+            <Container>
+              <img
+                className="d-block w-100"
+                src={productInfo.img[0]}
+                alt="First slide"
+              />
+            </Container>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Container>
+              <Typography variant="h5">{productInfo.name}</Typography>
+              <Rating value={rating} readOnly sx={{ color: 'black' }} />
+              <Typography variant="h5">{`$${productInfo.price} `}</Typography>
+              <br />
+              <Typography variant="body">{productInfo.description}</Typography>
+              <br />
+              <Container
+                sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={() => onAdd(productInfo)}
+                  startIcon={<AddShoppingCartIcon />}
+                >
                   Add to Cart
                 </Button>
-              </div>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-            </Card.Body>
-          </Card>
-        </div>
-      </div>
-    </div>
+              </Container>
+            </Container>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Container>
+              <Divider />
+              <br />
+              <Typography variant="h4">Reviews</Typography>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={handleClickOpen}
+              >
+                Write a review
+              </Button>
+              <WriteReview
+                openDialog={openDialog}
+                handleClose={handleClose}
+                productId={productID}
+              />
+              {productInfo.reviews.map((review, index) => {
+                return (
+                  <Container key={index} sx={{ marginTop: 4 }}>
+                    <Card raised>
+                      <CardContent>
+                        <Rating value={review.score} readOnly />
+                      </CardContent>
+                      <CardContent>{review.reviewMessage}</CardContent>
+                    </Card>
+                  </Container>
+                );
+              })}
+            </Container>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
   );
 };
 

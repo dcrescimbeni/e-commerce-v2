@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate} from "react-router-dom";
-import  axios  from "axios";
-import useInput from "../Hooks/useInputs";
-import {Button} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useInput from '../Hooks/useInputs';
+import { Button } from 'react-bootstrap';
 
 const NewProduct = () => {
-
-    //axios para crear producto
+  //axios para crear producto
   const name = useInput();
   const price = useInput();
   const color = useInput();
@@ -19,9 +18,9 @@ const NewProduct = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-      e.preventDefault();
+    e.preventDefault();
     axios
-    .post(`/api/products/newProduct`, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/products/newProduct`, {
         name: name.value,
         price: price.value,
         color: color.value,
@@ -30,16 +29,18 @@ const NewProduct = () => {
         categories: categories.value,
         img: pictures.value,
         pictures: pictures.value,
-        description: description.value
-    })
-    .then((res) => res.data)
-    .then((newProduct) => console.log(newProduct))
-    navigate("/productsManagement")
+        description: description.value,
+      })
+      .then((res) => res.data)
+      .then((newProduct) => console.log(newProduct));
+    navigate('/productsManagement');
   };
 
   return (
     <>
-      <h2 className="fs-4 mb-3 text-center text-uppercase">Add a New Product</h2>
+      <h2 className="fs-4 mb-3 text-center text-uppercase">
+        Add a New Product
+      </h2>
       <section className="container mt-5">
         <div className="card">
           <div className="card-body">
@@ -136,7 +137,9 @@ const NewProduct = () => {
                 />
               </div>
               <div className="col-12 modal-footer">
-              <Link to="/productsManagement"><Button variant="primary">Back</Button>{' '}</Link>
+                <Link to="/productsManagement">
+                  <Button variant="primary">Back</Button>{' '}
+                </Link>
                 <button type="submit" className="btn btn-primary pe-2">
                   Create
                 </button>

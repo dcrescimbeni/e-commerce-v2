@@ -1,47 +1,46 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import SubNavBar from "../components/SubNavBar";
-import { useDispatch, useSelector } from 'react-redux'
-import useScript from "../Hooks/useScript";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import SubNavBar from '../components/SubNavBar';
+import { useDispatch, useSelector } from 'react-redux';
+import useScript from '../Hooks/useScript';
 import { saveOrder } from '../state/orders';
 import { getSession } from '../state/user';
-import axios from "axios";
+import axios from 'axios';
 
 const Checkout = ({ cartItems }) => {
-  useScript("../script.js");
+  useScript('../script.js');
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   //Ve el usuario que esta conectado
   const user = useSelector((state) => state.user);
 
-
   const subtotal = cartItems.reduce(
-    (total, curr) => total + curr.price * curr.qty, 0);
+    (total, curr) => total + curr.price * curr.qty,
+    0
+  );
 
   const shipping = 0;
   const total = subtotal + shipping;
 
   const placeOrderHandler = (id, order) => {
-
     const myorder = {
-      id : user.userId,
+      id: user.userId,
       address: user.shippingAddress,
       total,
       products: order,
-    }
+    };
 
-    console.log("MyOrder")
+    console.log('MyOrder');
     console.log(myorder);
 
-    dispatch(saveOrder(myorder))
-    localStorage.removeItem('cart-products')
-    let email = user.email
+    dispatch(saveOrder(myorder));
+    localStorage.removeItem('cart-products');
+    let email = user.email;
     axios
-      .post('http://localhost:3001/api/users/sendMail' , {email})
-      .then(() => console.log('enviado'))
-      
-  }
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/users/sendMail`, { email })
+      .then(() => console.log('enviado'));
+  };
   return (
     <>
       <SubNavBar />
@@ -72,9 +71,9 @@ const Checkout = ({ cartItems }) => {
                           <td>
                             <br /> <span className="thin">Nike</span>
                             <br /> {item.name}
-                            <br />{" "}
+                            <br />{' '}
                             <span className="thin small">
-                              {" "}
+                              {' '}
                               Color: {item.color}, Size:
                               {item.size}
                               <br />
@@ -95,12 +94,12 @@ const Checkout = ({ cartItems }) => {
               })}
 
               <div className="total">
-                <span style={{ float: "left" }}>
+                <span style={{ float: 'left' }}>
                   <div className="thin dense">VAT 19%</div>
                   <div className="thin dense">Delivery</div>
                   TOTAL
                 </span>
-                <span style={{ float: "right", textAlign: "right" }}>
+                <span style={{ float: 'right', textAlign: 'right' }}>
                   <div className="thin dense">$ {subtotal.toFixed(2)}</div>
                   <div className="thin dense">${shipping.toFixed(2)}</div>$
                   {total.toFixed(2)}
@@ -145,7 +144,7 @@ const Checkout = ({ cartItems }) => {
                 <tbody>
                   <tr>
                     <td>
-                      {" "}
+                      {' '}
                       Expires
                       <input className="input-field" />
                     </td>
@@ -160,7 +159,9 @@ const Checkout = ({ cartItems }) => {
                 <button
                   className="pay-btn"
                   onClick={() => placeOrderHandler(user.userId, cartItems)}
-                >Checkout</button>
+                >
+                  Checkout
+                </button>
               </Link>
             </div>
           </div>

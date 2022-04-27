@@ -14,7 +14,6 @@ const Thanks = ({ cartItems, setCartItems }) => {
 
   return (
     <div>
-      <NavBar />
       <br />
       <br />
       <br />

@@ -13,6 +13,9 @@ const theme = createTheme({
   palette: {
     primary: blueGrey,
     secondary: deepOrange,
+    clear: {
+      main: '#fafafa',
+    },
   },
 });
 

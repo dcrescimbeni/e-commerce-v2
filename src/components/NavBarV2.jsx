@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { getSession } from '../state/user';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { GiConverseShoe } from 'react-icons/gi';
 
 import { AppBar, Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import UserActions from './UserActions';
 import NavigationMenu from './NavigationMenu';
+
+import CartIconComponent from './CartIconComponent';
 
 const NavBarV2 = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const NavBarV2 = () => {
   });
 
   return (
-    <AppBar position="fixed" sx={{ paddingTop: 2, paddingBottom: 2 }}>
+    <AppBar position="fixed">
       <Container
         sx={{
           display: 'flex',
@@ -40,10 +41,8 @@ const NavBarV2 = () => {
           </Typography>
         </Box>
         <NavigationMenu />
-        <Box sx={{ display: 'flex' }}>
-          <Container>
-            <AiOutlineShoppingCart size={32} />
-          </Container>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <CartIconComponent />
           <UserActions user={user} />
         </Box>
       </Container>

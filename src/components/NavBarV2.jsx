@@ -17,6 +17,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import SearchBar from './SearchBar';
 
 const NavBarV2 = () => {
   const dispatch = useDispatch();
@@ -85,22 +86,10 @@ const NavBarV2 = () => {
             <MenuItem onClick={() => navigate('/women')}>Women</MenuItem>
             <MenuItem onClick={() => navigate('/kids')}>Kids</MenuItem>
           </Menu>
-
-          <form
-            onSubmit={(e) => {
-              handleSearchSubmit(e);
-            }}
-            className="d-flex"
-          >
-            <input
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="form-control me-2"
-              aria-label="Search"
-              hint="Search"
-              type="text"
-              placeholder="Search"
-            />
-          </form>
+          <SearchBar
+            handleSearchSubmit={handleSearchSubmit}
+            setSearchTerm={setSearchTerm}
+          />
         </Box>
         <Box sx={{ display: 'flex' }}>
           <Container>

@@ -39,6 +39,7 @@ const UserDetailsButton = ({ user }) => {
         onClick={handleMenuOpen}
         startIcon={<AccountCircleIcon />}
         endIcon={<KeyboardArrowDownIcon />}
+        sx={{ whiteSpace: 'nowrap' }}
       >
         {user.firstName}
       </Button>

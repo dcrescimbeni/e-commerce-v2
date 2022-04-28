@@ -69,14 +69,14 @@ const NavBarV2 = () => {
         <Box sx={{ display: 'flex' }}>
           <Button
             color="clear"
-            variant="outlined"
+            variant="text"
             onClick={() => navigate('/products')}
           >
             View all
           </Button>
           <Button
             color="clear"
-            variant="outlined"
+            variant="text"
             onClick={handleMenuOpen}
             endIcon={<KeyboardArrowDownIcon />}
             sx={{ marginLeft: 3, marginRight: 3 }}

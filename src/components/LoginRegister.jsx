@@ -6,17 +6,14 @@ function LoginRegister() {
   let navigate = useNavigate();
 
   return (
-    <ButtonGroup
-      variant="text"
-      color="clear"
-      sx={{
-        width: '180px',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
+    <ButtonGroup variant="text" color="clear">
       <Button onClick={() => navigate('/login')}>Login</Button>
-      <Button onClick={() => navigate('/register')}>Sign up</Button>
+      <Button
+        sx={{ whiteSpace: 'nowrap' }}
+        onClick={() => navigate('/register')}
+      >
+        Sign up
+      </Button>
     </ButtonGroup>
   );
 }

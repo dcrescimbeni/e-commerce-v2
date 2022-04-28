@@ -18,6 +18,8 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import SearchBar from './SearchBar';
+import UserDetailsButton from './UserDetailsButton';
+import UserActions from './UserActions';
 
 const NavBarV2 = () => {
   const dispatch = useDispatch();
@@ -95,9 +97,7 @@ const NavBarV2 = () => {
           <Container>
             <AiOutlineShoppingCart size={32} />
           </Container>
-          <Container>
-            <CgProfile size={32} />
-          </Container>
+          <UserActions user={user} />
         </Box>
       </Container>
     </AppBar>

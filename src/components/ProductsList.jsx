@@ -82,7 +82,7 @@ const ProductsList = () => {
       <Grid container spacing={4}>
         {paginatedProducts?.map((product) => {
           return (
-            <Grid item md={4} key={product.productId}>
+            <Grid item sm={6} md={4} key={product.productId}>
               <Link to={`/products/${product.productId}`}>
                 <Card>
                   <CardMedia

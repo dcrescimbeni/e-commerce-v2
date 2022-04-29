@@ -13,6 +13,10 @@ const NavigationMenu = () => {
   const open = Boolean(anchorEl);
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
+  const handleMenuClick = (category) => {
+    navigate(`/${category}`);
+    handleMenuClose();
+  };
 
   const [searchTerm, setSearchTerm] = useState('');
   const handleSearchSubmit = async (e) => {
@@ -40,9 +44,9 @@ const NavigationMenu = () => {
           Categories
         </Button>
         <Menu open={open} onClose={handleMenuClose} anchorEl={anchorEl}>
-          <MenuItem onClick={() => navigate('/men')}>Men</MenuItem>
-          <MenuItem onClick={() => navigate('/women')}>Women</MenuItem>
-          <MenuItem onClick={() => navigate('/kids')}>Kids</MenuItem>
+          <MenuItem onClick={() => handleMenuClick('men')}>Men</MenuItem>
+          <MenuItem onClick={() => handleMenuClick('women')}>Women</MenuItem>
+          <MenuItem onClick={() => handleMenuClick('kids')}>Kids</MenuItem>
         </Menu>
         <SearchBar
           handleSearchSubmit={handleSearchSubmit}

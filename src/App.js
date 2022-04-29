@@ -70,24 +70,24 @@ function App() {
       setCartItems(
         cartItems.map((x) =>
           x.productId === product.productId
-            ? { ...exist, qty: exist.qty + 1 }
+            ? { ...exist, quantity: exist.quantity + 1 }
             : x
         )
       );
     } else {
-      setCartItems([...cartItems, { ...product, qty: 1 }]);
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
     }
   };
 
   const onRemove = (product) => {
     const exist = cartItems.find((x) => x.productId === product.productId);
-    if (exist.qty === 1) {
+    if (exist.quantity === 1) {
       setCartItems(cartItems.filter((x) => x.productId !== product.productId));
     } else {
       setCartItems(
         cartItems.map((x) =>
           x.productId === product.productId
-            ? { ...exist, qty: exist.qty - 1 }
+            ? { ...exist, quantity: exist.quantity - 1 }
             : x
         )
       );

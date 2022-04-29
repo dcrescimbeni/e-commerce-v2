@@ -42,7 +42,7 @@ POST http://localhost:3001/api/products/product/1/review
 content-type: application/json
 
 {
-    "reviewMessage": "testing reviews",
+    "reviewMessage": "another new review",
     "score": 5
 
 }

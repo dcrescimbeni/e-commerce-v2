@@ -15,10 +15,10 @@ const Checkout = ({ cartItems }) => {
   //Ve el usuario que esta conectado
   const user = useSelector((state) => state.user);
 
-  const subtotal = cartItems.reduce(
-    (total, curr) => total + curr.price * curr.qty,
-    0
-  );
+  const subtotal = cartItems.reduce((total, curr) => {
+    console.log(curr);
+    return total + curr.price * curr.quantity;
+  }, 0);
 
   const shipping = 0;
   const total = subtotal + shipping;

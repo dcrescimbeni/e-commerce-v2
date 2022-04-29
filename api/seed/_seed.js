@@ -55,19 +55,3 @@ async function assignCategory(relationship) {
   let category = await Category.findByPk(relationship.categoryId);
   await category.addProducts([product]);
 }
-
-// const createOrder = async (order) => {
-//   let { userId, address, total } = order;
-//   let newOrder = await Order.create({ userId, address, total });
-
-//   order.products.forEach(async (product) => {
-//     await fillOrderItems(newOrder.dataValues.orderId, product);
-//   });
-// };
-
-// const fillOrderItems = async (orderId, items) => {
-//   const { productId, qty, price } = items;
-//   await OrderDetails.create({ orderId, productId, qty, price });
-// };
-
-// seedDatabase();

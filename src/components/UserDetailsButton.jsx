@@ -57,7 +57,7 @@ const UserDetailsButton = ({ user }) => {
           <ListItemText>Purchase History</ListItemText>
         </MenuItem>
         {user.isAdmin ? (
-          <>
+          <div>
             <Divider />
             <MenuItem onClick={() => navigate(`/usersManagement`)}>
               <ListItemIcon>
@@ -65,7 +65,7 @@ const UserDetailsButton = ({ user }) => {
               </ListItemIcon>
               <ListItemText>Admin panel</ListItemText>
             </MenuItem>
-          </>
+          </div>
         ) : null}
         <Divider />
         <MenuItem onClick={handleLogoutClick}>

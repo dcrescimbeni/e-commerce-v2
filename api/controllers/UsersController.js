@@ -84,23 +84,23 @@ exports.giveAdmin = (req, res, next) => {
 
 exports.sendEmail = (req, res, next) => {
   console.log('llegue a mail');
-  async function main() {
-    let mailOptions = {
-      from: '"SNikers 👻" <fabriberdina@gmail.com>', // sender address
-      to: req.body.email, // list of receivers
-      subject: 'Su Pedido ha sido realizado ✔', // Subject line
-      html: '<b>Gracias por su compra en SNikers</b>', // html body
-    };
+  // async function main() {
+  //   let mailOptions = {
+  //     from: '"SNikers 👻" <fabriberdina@gmail.com>', // sender address
+  //     to: req.body.email, // list of receivers
+  //     subject: 'Su Pedido ha sido realizado ✔', // Subject line
+  //     html: '<b>Gracias por su compra en SNikers</b>', // html body
+  //   };
 
-    let info = await transport.sendMail(mailOptions, (err, info) => {
-      if (err) res.status(500).send(err.message);
-      else {
-        console.log('email enviado');
-        res.send(200);
-      }
-    });
-  }
-  main().catch(console.error);
+  //   let info = await transport.sendMail(mailOptions, (err, info) => {
+  //     if (err) res.status(500).send(err.message);
+  //     else {
+  //       console.log('email enviado');
+  //       res.send(200);
+  //     }
+  //   });
+  // }
+  // main().catch(console.error);
 };
 
 exports.getOrders = (req, res, next) => {

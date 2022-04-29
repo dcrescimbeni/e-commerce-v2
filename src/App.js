@@ -99,7 +99,7 @@ function App() {
   };
 
   return (
-    <>
+    <div className="App">
       <NavBarV2 />
       <Container sx={{ marginTop: 10, paddingBottom: 10 }}>
         <Routes>
@@ -159,7 +159,7 @@ function App() {
         </Routes>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 }
 

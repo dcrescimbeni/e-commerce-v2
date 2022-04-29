@@ -7,7 +7,7 @@ const Footer = () => {
     <AppBar
       position="relative"
       color="primary"
-      sx={{ top: 'auto', bottom: 0, padding: 2 }}
+      sx={{ top: 'auto', bottom: 0, padding: 2, display: 'flex' }}
     >
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>
         <Typography>

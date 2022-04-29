@@ -28,7 +28,6 @@ import Profile from './Pages/Profile';
 import PurchaseHistory from './Pages/PurchaseHistory.jsx';
 import NewProduct from './Pages/NewProduct';
 import ProductEdit from './Pages/ProductEdit';
-import NavBar from './components/NavBar';
 import NavBarV2 from './components/NavBarV2';
 import { Container } from '@mui/material';
 

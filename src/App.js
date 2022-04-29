@@ -28,7 +28,8 @@ import Profile from './Pages/Profile';
 import PurchaseHistory from './Pages/PurchaseHistory.jsx';
 import NewProduct from './Pages/NewProduct';
 import ProductEdit from './Pages/ProductEdit';
-import NavBar from './components/NavBar';
+import NavBarV2 from './components/NavBarV2';
+import { Container } from '@mui/material';
 
 function App() {
   const locaStorageProducts =
@@ -98,9 +99,9 @@ function App() {
   };
 
   return (
-    <div>
-      <NavBar />
-      <main>
+    <div className="App">
+      <NavBarV2 />
+      <Container sx={{ marginTop: 10, paddingBottom: 10 }}>
         <Routes>
           <Route
             path="/shoppingcart"
@@ -156,10 +157,9 @@ function App() {
           <Route path="/newProduct" element={<NewProduct />} />
           <Route path="/products/edit/:id" element={<ProductEdit />} />
         </Routes>
-      </main>
-      {/* <Footer /> */}
+      </Container>
+      <Footer />
     </div>
-    // </ThemeProvider>
   );
 }
 

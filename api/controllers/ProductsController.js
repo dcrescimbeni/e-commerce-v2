@@ -4,8 +4,6 @@ const Review = require('../models/Review');
 const { Op } = require('sequelize');
 
 exports.allProducts = async (req, res, next) => {
-  req.isAuthenticated();
-  console.log('all products ', req.user);
   try {
     let products = await Products.findAll({ include: Category });
     res.send(products);
@@ -47,9 +45,9 @@ exports.productFindCategory = async (req, res, next) => {
 };
 
 exports.writeReview = async (req, res, next) => {
-  let reviewData = {};
-
   try {
+    let reviewData = {};
+
     reviewData.productId = req.params.productId;
     reviewData.reviewMessage = req.body.reviewMessage;
     reviewData.score = req.body.score;

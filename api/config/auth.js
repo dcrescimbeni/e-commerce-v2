@@ -4,16 +4,24 @@ const passport = require('passport');
 const { User } = require('../models');
 
 const verifyCallback = (email, password, done) => {
+  email = email.toLowerCase();
+
   User.findOne({ where: { email } })
     .then((res) => {
+      console.log('found user?');
+      console.log(res);
       if (!res) {
         done(null, false);
         return;
       }
       let user = res.dataValues;
       bcrypt.compare(password, user.password).then((isValid) => {
-        if (isValid) done(null, user);
-        else done(null, false);
+        if (isValid) {
+          console.log('password valid');
+          done(null, user);
+        } else {
+          done(null, false);
+        }
       });
     })
     .catch((err) => done(err));
@@ -34,6 +42,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((userId, done) => {
+  console.log('deserialize');
   User.findByPk(userId)
     .then((user) => {
       done(null, user);

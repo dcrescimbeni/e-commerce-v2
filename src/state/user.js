@@ -14,9 +14,7 @@ export const sendRegister = createAsyncThunk('REGISTER', (form) => {
 
 export const getSession = createAsyncThunk('GET_SESSION', () => {
   return axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/api/users/me`, {
-      withCredentials: true,
-    })
+    .get(`${process.env.REACT_APP_SERVER_URL}/api/users/me`)
     .then((res) => res.data);
 });
 

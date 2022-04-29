@@ -10,7 +10,8 @@ exports.userCreate = (req, res, next) => {
 };
 
 exports.userLogin = (req, res, next) => {
-  res.send(req.user);
+  console.log('success!');
+  res.send('USER');
 };
 
 exports.userLogout = (req, res, next) => {
@@ -19,8 +20,6 @@ exports.userLogout = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-  console.log('getUsers');
-  console.log(req.isAuthenticated());
   if (!req.user) res.sendStatus(401);
   else {
     res.send(req.user);

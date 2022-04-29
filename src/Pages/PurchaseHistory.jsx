@@ -14,21 +14,11 @@ const PurchaseHistory = () => {
       .then((res) => setOrders(res.data));
   }, []);
 
-  console.log('orders =>', orders);
   return (
     <div>
-      <br />
-      <br />
-      <br />
-      <br />
-
       <h2>
         <b>Purchase History</b>
       </h2>
-      <br />
-      <br />
-      <br />
-      <br />
       {/* Aca empieza el test del table bootstrap */}
       <div>
         <Table responsive="sm">
@@ -62,9 +52,6 @@ const PurchaseHistory = () => {
           </tbody>
         </Table>
       </div>
-      <br />
-      <br />
-      <br />
     </div>
   );
 };

@@ -6,9 +6,6 @@ exports.createOrder = async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { userId: req.params.id } });
 
-    console.log('req.body');
-    console.log(req.body);
-
     if (!user) throw new Error('User not found');
 
     const orderObj = {

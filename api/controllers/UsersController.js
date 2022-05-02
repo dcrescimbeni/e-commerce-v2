@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer');
-const { transport } = require('../config/email');
+// const nodemailer = require('nodemailer');
+// const { transport } = require('../config/email');
 const User = require('../models/User');
 const { Order, OrderDetails } = require('../models');
 const passport = require('passport');
@@ -146,6 +146,7 @@ exports.getOrders = (req, res, next) => {
     include: OrderDetails,
     where: { userId: req.params.id },
   }).then((data) => {
+    console.log(data[0].dataValues.orderDetails);
     res.send(data);
   });
 };

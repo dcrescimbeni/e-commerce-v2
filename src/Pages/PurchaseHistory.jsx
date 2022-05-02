@@ -14,7 +14,11 @@ const PurchaseHistory = () => {
       .get(
         `${process.env.REACT_APP_SERVER_URL}/api/users/userOrders/${id}?token=${userToken}`
       )
-      .then((res) => setOrders(res.data));
+      .then((res) => {
+        console.log(res.data);
+        setOrders(res.data);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -29,28 +33,27 @@ const PurchaseHistory = () => {
             <tr>
               <th></th>
               <th>Order Number</th>
-              <th>Products</th>
+              <th>Number of products</th>
               <th>Date</th>
-              <th>Price</th>
+              <th>Total</th>
             </tr>
           </thead>
           <tbody>
             {orders?.map((order) => {
-              return order.orderDetails?.map((product) => {
-                return (
-                  <tr>
-                    <td>
-                      {' '}
-                      <AiOutlineShoppingCart />
-                    </td>
-                    {/* {Product.price} */}
-                    <td>{order.orderId}</td>
-                    <td>{product.name}</td>
-                    <td>{product.createdAt.substring(0, 10)}</td>
-                    <td>${product.price}</td>
-                  </tr>
-                );
-              });
+              let orderTotal = order.orderDetails.reduce((prev, current) => {
+                return (prev += current.price);
+              }, 0);
+              return (
+                <tr>
+                  <td>
+                    <AiOutlineShoppingCart />
+                  </td>
+                  <td>{order.orderId}</td>
+                  <td>{order.orderDetails.length}</td>
+                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>${orderTotal}</td>
+                </tr>
+              );
             })}
           </tbody>
         </Table>

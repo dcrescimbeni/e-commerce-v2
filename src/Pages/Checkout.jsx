@@ -4,8 +4,6 @@ import SubNavBar from '../components/SubNavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import useScript from '../Hooks/useScript';
 import { saveOrder } from '../state/orders';
-import { getSession } from '../state/user';
-import axios from 'axios';
 
 const Checkout = ({ cartItems }) => {
   useScript('../script.js');
@@ -36,14 +34,6 @@ const Checkout = ({ cartItems }) => {
 
     dispatch(saveOrder(myorder));
     localStorage.removeItem('cart-products');
-    let email = user.email;
-    let userToken = localStorage.getItem('token');
-    axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/api/users/sendMail?token=${userToken}`,
-        { email }
-      )
-      .then(() => console.log('enviado'));
   };
   return (
     <>
@@ -73,21 +63,12 @@ const Checkout = ({ cartItems }) => {
                             />
                           </td>
                           <td>
-                            <br /> <span className="thin">Nike</span>
                             <br /> {item.name}
-                            <br />{' '}
-                            <span className="thin small">
-                              {' '}
-                              Color: {item.color}, Size:
-                              {item.size}
-                              <br />
-                              <br />
-                            </span>
                           </td>
                         </tr>
                         <tr>
                           <td>
-                            <div className="price">{item.price}</div>
+                            <div className="price">$ {item.price}</div>
                           </td>
                         </tr>
                       </tbody>
@@ -97,18 +78,7 @@ const Checkout = ({ cartItems }) => {
                 );
               })}
 
-              <div className="total">
-                <span style={{ float: 'left' }}>
-                  <div className="thin dense">VAT 19%</div>
-                  <div className="thin dense">Delivery</div>
-                  TOTAL
-                </span>
-                <span style={{ float: 'right', textAlign: 'right' }}>
-                  <div className="thin dense">$ {subtotal.toFixed(2)}</div>
-                  <div className="thin dense">${shipping.toFixed(2)}</div>$
-                  {total.toFixed(2)}
-                </span>
-              </div>
+              <div className="total">${total.toFixed(2)}</div>
             </div>
           </div>
           <div className="credit-info">

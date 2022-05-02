@@ -28,18 +28,29 @@ const NavigationMenu = () => {
     <>
       <Box sx={{ display: 'flex' }}>
         <Button
-          color="clear"
+          sx={{
+            color: {
+              sm: 'primary.main',
+              md: 'clear.main',
+            },
+          }}
           variant="text"
           onClick={() => navigate('/products')}
         >
           View all
         </Button>
         <Button
-          color="clear"
+          sx={{
+            color: {
+              sm: 'primary.main',
+              md: 'clear.main',
+            },
+            marginLeft: 3,
+            marginRight: 3,
+          }}
           variant="text"
           onClick={handleMenuOpen}
           endIcon={<KeyboardArrowDownIcon />}
-          sx={{ marginLeft: 3, marginRight: 3 }}
         >
           Categories
         </Button>

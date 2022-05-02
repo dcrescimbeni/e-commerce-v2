@@ -19,7 +19,8 @@ app.use(
       `https://localhost:3001`,
       `http://localhost:3000`,
       `https://localhost:3000`,
-      `https://snikers.netlify.app/`,
+      `https://snikers.netlify.app`,
+      `https://snikers-ecommerce.herokuapp.com`,
     ],
     credentials: true,
   })

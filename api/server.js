@@ -19,6 +19,7 @@ app.use(
       `https://localhost:3001`,
       `http://localhost:3000`,
       `https://localhost:3000`,
+      `https://snikers.netlify.app/`,
     ],
     credentials: true,
   })

@@ -14,8 +14,12 @@ export const filteredProducts = createAsyncThunk('FILTER_PRODUCTS', (id) => {
 });
 
 export const postProduct = createAsyncThunk('POST_PRODUCT', (post) => {
+  let userToken = localStorage.getItem('token');
   return axios
-    .post(`${process.env.REACT_APP_SERVER_URL}/api/product/newProduct`, post)
+    .post(
+      `${process.env.REACT_APP_SERVER_URL}/api/product/newProduct?token=${userToken}`,
+      post
+    )
     .then((r) => r.data);
 });
 

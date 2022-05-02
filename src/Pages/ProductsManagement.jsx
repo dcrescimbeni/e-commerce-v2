@@ -20,9 +20,10 @@ const ProductsManagement = () => {
 
   const handleDelete = (e, productId) => {
     e.preventDefault();
+    let userToken = localStorage.getItem('token');
     axios
       .delete(
-        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productId}`
+        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productId}?token=${userToken}`
       )
       .then(() => {
         const newProductsList = productsList.filter(

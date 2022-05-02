@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import useInput from '../Hooks/useInputs';
 import axios from 'axios';
 
@@ -10,10 +9,19 @@ const Profile = () => {
   let billingAddress = useInput();
   let shippingAddress = useInput();
 
-  const user = useSelector((state) => {
-    console.log(state.user);
-    return state.user;
-  });
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    let userToken = localStorage.getItem('token');
+    axios
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/details?token=${userToken}`
+      )
+      .then((res) => {
+        console.log(res);
+        setUser(res.data);
+      });
+  }, []);
 
   useEffect(() => {
     firstName.setValue(user.firstName);
@@ -26,18 +34,23 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`${process.env.REACT_APP_SERVER_URL}/api/users/details`, {
-      firstName: firstName.value,
-    });
+    let userToken = localStorage.getItem('token');
+    axios.put(
+      `${process.env.REACT_APP_SERVER_URL}/api/users/details?token=${userToken}`,
+      {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+        billingAddress: billingAddress.value,
+        shippingAddress: shippingAddress.value,
+      }
+    );
   };
 
-  if (!user.userId) return <div></div>;
+  if (!user.firstName) return <div></div>;
 
   return (
     <div>
-      <br />
-      <br />
-      <br />
       <>
         <h2 className="fs-4 mb-3 text-center text-uppercase">Edit Profile</h2>
         <section className="container mt-5">
@@ -111,13 +124,6 @@ const Profile = () => {
           </div>
         </section>
       </>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 };

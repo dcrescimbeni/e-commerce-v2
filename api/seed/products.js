@@ -27,7 +27,7 @@ let products = [
       'https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/bfd17274-9e1a-4b09-b67f-235ea20dafab/calzado-air-max-90-se-g5nqKN.png',
       'https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/89048d68-e103-4a44-b6ad-d353b5f341e2/calzado-air-max-90-se-g5nqKN.png',
     ],
-    description: ``,
+    description: `Nothing as fly, nothing as comfortable, nothing as proven—the Nike Air Max 90 stays true to its roots with the iconic Waffle sole, stitched overlays and classic TPU accents. Fresh details give a modern look while Max Air cushioning adds comfort to your journey.`,
   },
   {
     productId: 3,

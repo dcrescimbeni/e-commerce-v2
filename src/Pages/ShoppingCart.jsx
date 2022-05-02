@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const ShoppingCart = ({ onAdd, onRemove, onDelete, cartItems }) => {
   const subtotal = cartItems.reduce(
-    (total, curr) => total + curr.price * curr.qty,
+    (total, curr) => total + curr.price * curr.quantity,
     0
   );
   const shipping = 0;
@@ -75,7 +75,7 @@ const ShoppingCart = ({ onAdd, onRemove, onDelete, cartItems }) => {
                                   style={{ textAlign: 'center' }}
                                   min="0"
                                   name="quantity"
-                                  value={item.qty}
+                                  value={item.quantity}
                                   onChange={(e) => onModify(e.target.value)}
                                   type="number"
                                   className="form-control form-control-sm"
@@ -92,7 +92,7 @@ const ShoppingCart = ({ onAdd, onRemove, onDelete, cartItems }) => {
                               <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                 <span className="mb-0">
                                   <strong>
-                                    {item.qty} x ${item.price.toFixed(2)}
+                                    {item.quantity} x ${item.price.toFixed(2)}
                                   </strong>
                                 </span>
                               </div>

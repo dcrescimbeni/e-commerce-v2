@@ -1,28 +1,31 @@
-const Order = require("../models/Order");
-const User = require("../models/User");
+const Order = require('../models/Order');
+const User = require('../models/User');
 const OrderDetails = require('../models/OrderDetails');
 
+exports.createOrder = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ where: { userId: req.params.id } });
 
-exports.createOrder = (req, res, next) => {
-  console.log(req.body)
-  User.findOne({ where: { userId: req.params.id } })
-    .then(() => {
-      const orderObj = {
-        address: req.body.address,
-        total: req.body.total,
-        userId: req.params.id
-      };
-      
-      Order.create(orderObj)
-        .then((data) => {
-          req.body.products.map(product => {
-            product['orderId'] = data.dataValues.orderId
-            OrderDetails.create(product)
-          })
+    console.log('req.body');
+    console.log(req.body);
 
-        })
-        .then(() => res.send(202))
-        .catch((err) => next(err));
+    if (!user) throw new Error('User not found');
+
+    const orderObj = {
+      address: req.body.address,
+      total: req.body.total,
+      userId: req.params.id,
+    };
+
+    let newOrder = await Order.create(orderObj);
+
+    await req.body.products.map(async (product) => {
+      product.orderId = newOrder.dataValues.orderId;
+      await OrderDetails.create(product);
     });
-};
 
+    res.send(200);
+  } catch (err) {
+    next(err);
+  }
+};

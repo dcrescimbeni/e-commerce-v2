@@ -5,7 +5,7 @@ import UserDetailsButton from './UserDetailsButton';
 const UserActions = ({ user }) => {
   return (
     <div>
-      {user.userId ? <UserDetailsButton user={user} /> : <LoginRegister />}
+      {user.firstName ? <UserDetailsButton user={user} /> : <LoginRegister />}
     </div>
   );
 };

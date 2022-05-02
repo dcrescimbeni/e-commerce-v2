@@ -15,10 +15,10 @@ const Checkout = ({ cartItems }) => {
   //Ve el usuario que esta conectado
   const user = useSelector((state) => state.user);
 
-  const subtotal = cartItems.reduce(
-    (total, curr) => total + curr.price * curr.qty,
-    0
-  );
+  const subtotal = cartItems.reduce((total, curr) => {
+    console.log(curr);
+    return total + curr.price * curr.quantity;
+  }, 0);
 
   const shipping = 0;
   const total = subtotal + shipping;
@@ -37,8 +37,12 @@ const Checkout = ({ cartItems }) => {
     dispatch(saveOrder(myorder));
     localStorage.removeItem('cart-products');
     let email = user.email;
+    let userToken = localStorage.getItem('token');
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/users/sendMail`, { email })
+      .post(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/sendMail?token=${userToken}`,
+        { email }
+      )
       .then(() => console.log('enviado'));
   };
   return (

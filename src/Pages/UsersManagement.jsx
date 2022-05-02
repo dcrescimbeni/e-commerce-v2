@@ -23,8 +23,11 @@ const UsersManagement = () => {
   const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
+    let userToken = localStorage.getItem('token');
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/users/user/${userId}`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/user/${userId}?token=${userToken}`
+      )
       .then((res) => res.data)
       .then((user) => {
         setUserInfo(user);
@@ -58,15 +61,19 @@ const UsersManagement = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let userToken = localStorage.getItem('token');
     axios
-      .put(`${process.env.REACT_APP_SERVER_URL}/api/users/edit/${userId}`, {
-        firstName: firstName.value,
-        lastName: lastName.value,
-        email: email.value,
-        billingAddress: billingAddress.value,
-        shippingAddress: shippingAddress.value,
-        isAdmin: admin,
-      })
+      .put(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/edit/${userId}?token=${userToken}`,
+        {
+          firstName: firstName.value,
+          lastName: lastName.value,
+          email: email.value,
+          billingAddress: billingAddress.value,
+          shippingAddress: shippingAddress.value,
+          isAdmin: admin,
+        }
+      )
       .then((res) => res.data)
       .then((editedUser) => console.log(editedUser));
     navigate('/usersManagement');

@@ -9,26 +9,19 @@ const PurchaseHistory = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    let userToken = localStorage.getItem('token');
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/users/userOrders/${id}`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/userOrders/${id}?token=${userToken}`
+      )
       .then((res) => setOrders(res.data));
   }, []);
 
-  console.log('orders =>', orders);
   return (
     <div>
-      <br />
-      <br />
-      <br />
-      <br />
-
       <h2>
         <b>Purchase History</b>
       </h2>
-      <br />
-      <br />
-      <br />
-      <br />
       {/* Aca empieza el test del table bootstrap */}
       <div>
         <Table responsive="sm">
@@ -62,9 +55,6 @@ const PurchaseHistory = () => {
           </tbody>
         </Table>
       </div>
-      <br />
-      <br />
-      <br />
     </div>
   );
 };

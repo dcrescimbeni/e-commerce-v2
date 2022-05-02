@@ -1,12 +1,5 @@
 const db = require('../config/db');
-const {
-  User,
-  Product,
-  Category,
-  Review,
-  Order,
-  OrderDetails,
-} = require('../models/index');
+const { User, Product, Category, Review } = require('../models/index');
 
 const users = require('./users');
 const products = require('./products');
@@ -14,9 +7,14 @@ const reviews = require('./reviews');
 const { categories, categoriesRelationships } = require('./categories');
 
 async function sequentialCreate(model, data) {
-  data.forEach(async (row) => {
-    await model.create(row);
-  });
+  await Promise.all(
+    data.map(async (row) => {
+      await model.create(row);
+    })
+  );
+  // data.forEach(async (row) => {
+  //   await model.create(row);
+  // });
 }
 
 const seedDatabase = async () => {
@@ -26,23 +24,23 @@ const seedDatabase = async () => {
   console.log(`Database synced. Force: ${forceSync}`);
   // !
 
-  await User.bulkCreate(users, { individualHooks: true });
+  await sequentialCreate(User, users);
   console.log('Users created');
 
-  await Product.bulkCreate(products);
+  await sequentialCreate(Product, products);
   console.log('Products created');
 
-  await Category.bulkCreate(categories);
+  await sequentialCreate(Category, categories);
   console.log('Categories created');
 
-  categoriesRelationships.forEach(async (relationship) => {
-    await assignCategory(relationship);
-  });
+  await Promise.all(
+    categoriesRelationships.map(async (relationship) => {
+      await assignCategory(relationship);
+    })
+  );
   console.log('Relationships created');
 
-  sequentialCreate(Review, reviews);
-
-  // await Review.bulkCreate(reviews, { hooks: true, individualHooks: true });
+  await sequentialCreate(Review, reviews);
   console.log('Reviews created');
 
   return;
@@ -55,19 +53,3 @@ async function assignCategory(relationship) {
   let category = await Category.findByPk(relationship.categoryId);
   await category.addProducts([product]);
 }
-
-// const createOrder = async (order) => {
-//   let { userId, address, total } = order;
-//   let newOrder = await Order.create({ userId, address, total });
-
-//   order.products.forEach(async (product) => {
-//     await fillOrderItems(newOrder.dataValues.orderId, product);
-//   });
-// };
-
-// const fillOrderItems = async (orderId, items) => {
-//   const { productId, qty, price } = items;
-//   await OrderDetails.create({ orderId, productId, qty, price });
-// };
-
-// seedDatabase();

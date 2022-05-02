@@ -21,17 +21,7 @@ const Thanks = ({ cartItems, setCartItems }) => {
         <div className="card-body">
           <div className="jumbotron text-center">
             <h1 className="display-3">Thanks For Your Order!</h1>
-            <p className="lead">
-              <strong>
-                Please check your email,
-                <br />
-              </strong>
-              to see the details of your order.
-            </p>
-            <hr />
-            <p>
-              Problems? <Link to="/"> Contac Us</Link>
-            </p>
+
             <p className="lead">
               <Link
                 to="/"

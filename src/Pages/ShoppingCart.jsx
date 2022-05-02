@@ -45,6 +45,10 @@ const ShoppingCart = ({ onAdd, onRemove, onDelete, cartItems }) => {
                         <hr className="my-4" />
 
                         {cartItems.map((item) => {
+                          if (item.description.length > 110) {
+                            item.description =
+                              item.description.substring(0, 110) + '...';
+                          }
                           return (
                             <div
                               key={item.productId}

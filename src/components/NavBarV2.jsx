@@ -12,10 +12,17 @@ import NavigationMenu from './NavigationMenu';
 
 import CartIconComponent from './CartIconComponent';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import NavigationMenuResp from './NavigationMenuResp';
+
 const NavBarV2 = () => {
   const dispatch = useDispatch();
 
   let navigate = useNavigate();
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
     dispatch(getSession());
@@ -36,13 +43,19 @@ const NavBarV2 = () => {
           alignItems: 'center',
         }}
       >
-        <Box onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-          <Typography variant="h5">
-            <GiConverseShoe size={30} />
+        <Box
+          onClick={() => navigate('/')}
+          sx={{ cursor: 'pointer', display: 'flex' }}
+        >
+          <GiConverseShoe size={30} />
+          <Typography
+            variant="h5"
+            sx={{ display: { xs: 'none', sm: 'inline' } }}
+          >
             SNikers
           </Typography>
         </Box>
-        <NavigationMenu />
+        {!matches ? <NavigationMenuResp /> : <NavigationMenu />}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <CartIconComponent />
           <UserActions user={user} />

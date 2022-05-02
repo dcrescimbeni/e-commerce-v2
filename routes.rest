@@ -32,7 +32,7 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3001/api/users/user/3
+GET http://localhost:3001/api/users/user/3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpc0FkbWluIjp0cnVlLCJmaXJzdE5hbWUiOiJNciBBZG1pbiJ9LCJpYXQiOjE2NTE0OTczMzR9.67yJNywzP_Bjw8uAtwa7CWY12C7b_ueSzTU0-pU7gRs
 
 ###
 GET http://localhost:3001/api/products/product/9
@@ -41,8 +41,12 @@ GET http://localhost:3001/api/products/product/9
 POST http://localhost:3001/api/products/product/1/review
 content-type: application/json
 
+
 {
     "reviewMessage": "another new review",
     "score": 5
 
 }
+
+###
+GET http://localhost:3001/api/users/me?secret_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpc0FkbWluIjp0cnVlfSwiaWF0IjoxNjUxMjY4MjUyfQ.BSNFevp4zo4HOvKF9cwwHKlgZoc69o1hDBtrdLaaa

@@ -25,9 +25,7 @@ app.use(
 );
 
 app.use(volleyball);
-
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', route);

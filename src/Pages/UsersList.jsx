@@ -7,8 +7,11 @@ const UsersList = () => {
   const [usersList, setUsersList] = useState();
 
   useEffect(() => {
+    let userToken = localStorage.getItem('token');
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/users/all`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/all?token=${userToken}`
+      )
       .then((res) => res.data)
       .then((users) => setUsersList(users));
   }, []);
@@ -19,8 +22,11 @@ const UsersList = () => {
 
   const handleDelete = (e, userId) => {
     e.preventDefault();
+    let userToken = localStorage.getItem('token');
     axios
-      .delete(`${process.env.REACT_APP_SERVER_URL}/api/users/delete/${userId}`)
+      .delete(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/delete/${userId}?token=${userToken}`
+      )
       .then(() => {
         const newUsersList = usersList.filter((user) => user.userId !== userId);
         setUsersList(newUsersList);

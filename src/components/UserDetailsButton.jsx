@@ -28,6 +28,9 @@ const UserDetailsButton = ({ user }) => {
 
   const handleLogoutClick = () => {
     dispatch(sendLogoutRequest());
+    handleMenuClose();
+    localStorage.removeItem('token');
+    navigate('/');
   };
 
   let navigate = useNavigate();
@@ -44,13 +47,23 @@ const UserDetailsButton = ({ user }) => {
         {user.firstName}
       </Button>
       <Menu open={open} onClose={handleMenuClose} anchorEl={anchorEl}>
-        <MenuItem onClick={() => navigate(`/profile`)}>
+        <MenuItem
+          onClick={() => {
+            handleMenuClose();
+            navigate(`/profile`);
+          }}
+        >
           <ListItemIcon>
             <ManageAccountsIcon />
           </ListItemIcon>
           <ListItemText>Profile</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => navigate(`/userOrders/${user.userId}`)}>
+        <MenuItem
+          onClick={() => {
+            handleMenuClose();
+            navigate(`/userOrders/${user.userId}`);
+          }}
+        >
           <ListItemIcon>
             <LocalMallIcon />
           </ListItemIcon>
@@ -59,7 +72,12 @@ const UserDetailsButton = ({ user }) => {
         {user.isAdmin ? (
           <div>
             <Divider />
-            <MenuItem onClick={() => navigate(`/usersManagement`)}>
+            <MenuItem
+              onClick={() => {
+                handleMenuClose();
+                navigate(`/usersManagement`);
+              }}
+            >
               <ListItemIcon>
                 <AdminPanelSettingsIcon />
               </ListItemIcon>

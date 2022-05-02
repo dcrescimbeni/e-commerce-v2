@@ -1,7 +1,9 @@
-const User = require('../models/User');
 const nodemailer = require('nodemailer');
 const { transport } = require('../config/email');
+const User = require('../models/User');
 const { Order, OrderDetails } = require('../models');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 exports.userCreate = (req, res, next) => {
   User.create(req.body)
@@ -9,26 +11,63 @@ exports.userCreate = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-exports.userLogin = (req, res, next) => {
-  console.log('success!');
-  res.send('USER');
+exports.userLogin = async (req, res, next) => {
+  passport.authenticate('login', async (err, user, info) => {
+    try {
+      if (err || !user) {
+        const error = new Error('An error occurred.');
+
+        return next(error);
+      }
+
+      req.login(user, { session: false }, async (error) => {
+        if (error) return next(error);
+
+        const body = {
+          userId: user.dataValues.userId,
+          email: user.dataValues.email,
+          isAdmin: user.dataValues.isAdmin,
+          firstName: user.dataValues.firstName,
+        };
+        const token = jwt.sign({ user: body }, 'TOP_SECRET');
+
+        return res.json({
+          token,
+          userId: user.dataValues.userId,
+          firstName: user.dataValues.firstName,
+          lastName: user.dataValues.lastName,
+          email: user.dataValues.email,
+          billingAddress: user.dataValues.billingAddress,
+          shippingAddress: user.dataValues.shippingAddress,
+          isAdmin: user.dataValues.isAdmin,
+        });
+      });
+    } catch (error) {
+      return next(error);
+    }
+  })(req, res, next);
 };
 
 exports.userLogout = (req, res, next) => {
-  req.logout();
-  res.redirect('/').catch((err) => next(err));
+  res.send({ message: 'logout' });
 };
 
 exports.getUser = (req, res, next) => {
-  if (!req.user) res.sendStatus(401);
-  else {
-    res.send(req.user);
-  }
+  console.log(req.user);
+  res.send({
+    message: 'secret route',
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    email: req.user.email,
+    billingAddress: req.user.billingAddress,
+    shippingAddress: req.user.shippingAddress,
+    isAdmin: req.user.isAdmin,
+  });
 };
 
 exports.getOwnDetails = async (req, res, next) => {
   try {
-    const { userId } = req.user.dataValues;
+    const { userId } = req.user;
     let user = await User.findByPk(userId);
     res.send(user);
   } catch (err) {
@@ -37,7 +76,7 @@ exports.getOwnDetails = async (req, res, next) => {
 };
 
 exports.editOwnUser = (req, res, next) => {
-  const { userId } = req.user.dataValues;
+  const { userId } = req.user;
 
   User.update(req.body, {
     where: {

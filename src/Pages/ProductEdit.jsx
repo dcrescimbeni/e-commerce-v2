@@ -53,9 +53,10 @@ const ProductEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let userToken = localStorage.getItem('token');
     axios
       .put(
-        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productId}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productId}?token=${userToken}`,
         {
           name: productName.value,
           price: price.value,

@@ -37,8 +37,12 @@ const Checkout = ({ cartItems }) => {
     dispatch(saveOrder(myorder));
     localStorage.removeItem('cart-products');
     let email = user.email;
+    let userToken = localStorage.getItem('token');
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/users/sendMail`, { email })
+      .post(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/sendMail?token=${userToken}`,
+        { email }
+      )
       .then(() => console.log('enviado'));
   };
   return (

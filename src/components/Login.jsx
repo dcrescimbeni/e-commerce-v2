@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../Hooks/useInputs';
 import { sendLogoutRequest } from '../state/user';
 import { sendLoginRequest } from '../state/user';
-import { FcGoogle } from 'react-icons/fc';
-import { BsFacebook } from 'react-icons/bs';
 import { GiConverseShoe } from 'react-icons/gi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
@@ -239,12 +237,6 @@ const Login = () => {
                 <b>Register</b>
               </div>
             </Link>
-            {/* <Link to="/google">
-              <FcGoogle size={32} />
-            </Link>{' '}
-            <Link to="/facebook">
-              <BsFacebook size={30} />
-            </Link> */}
           </Form>
         </div>
       </div>

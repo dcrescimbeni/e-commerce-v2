@@ -19,18 +19,22 @@ const NewProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let userToken = localStorage.getItem('token');
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/products/newProduct`, {
-        name: name.value,
-        price: price.value,
-        color: color.value,
-        size: size.value,
-        stock: stock.value,
-        categories: categories.value,
-        img: pictures.value,
-        pictures: pictures.value,
-        description: description.value,
-      })
+      .post(
+        `${process.env.REACT_APP_SERVER_URL}/api/products/newProduct?token=${userToken}`,
+        {
+          name: name.value,
+          price: price.value,
+          color: color.value,
+          size: size.value,
+          stock: stock.value,
+          categories: categories.value,
+          img: pictures.value,
+          pictures: pictures.value,
+          description: description.value,
+        }
+      )
       .then((res) => res.data)
       .then((newProduct) => console.log(newProduct));
     navigate('/productsManagement');

@@ -51,7 +51,7 @@ exports.writeReview = async (req, res, next) => {
     reviewData.productId = req.params.productId;
     reviewData.reviewMessage = req.body.reviewMessage;
     reviewData.score = req.body.score;
-    reviewData.userId = 1;
+    reviewData.userId = req.user.userId;
 
     await Review.create(reviewData);
 

@@ -4,7 +4,12 @@ import axios from 'axios';
 export const sendLoginRequest = createAsyncThunk('LOGIN', (form) => {
   return axios
     .post(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, form)
-    .then((res) => res.data);
+    .then((res) => {
+      console.log('login response:');
+      console.log(res.data);
+      localStorage.setItem('token', res.data.token);
+      return res.data;
+    });
 });
 export const sendRegister = createAsyncThunk('REGISTER', (form) => {
   return axios
@@ -13,8 +18,9 @@ export const sendRegister = createAsyncThunk('REGISTER', (form) => {
 });
 
 export const getSession = createAsyncThunk('GET_SESSION', () => {
+  let userToken = localStorage.getItem('token');
   return axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/api/users/me`)
+    .get(`${process.env.REACT_APP_SERVER_URL}/api/users/me?token=${userToken}`)
     .then((res) => res.data);
 });
 

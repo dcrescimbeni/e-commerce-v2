@@ -9,8 +9,11 @@ const PurchaseHistory = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    let userToken = localStorage.getItem('token');
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/users/userOrders/${id}`)
+      .get(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/userOrders/${id}?token=${userToken}`
+      )
       .then((res) => setOrders(res.data));
   }, []);
 

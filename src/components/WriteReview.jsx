@@ -14,12 +14,13 @@ import axios from 'axios';
 
 const WriteReview = ({ openDialog, handleClose, productId }) => {
   const [score, setScore] = useState(0);
-  const [reviewMessage, setReviewMessage] = useState('testing react review');
+  const [reviewMessage, setReviewMessage] = useState('');
 
   const handleSendReview = () => {
+    let userToken = localStorage.getItem('token');
     if (score > 0 && score <= 5) {
       axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productId}/review`,
+        `${process.env.REACT_APP_SERVER_URL}/api/products/product/${productId}/review?token=${userToken}`,
         {
           reviewMessage,
           productId,
@@ -27,6 +28,8 @@ const WriteReview = ({ openDialog, handleClose, productId }) => {
         }
       );
       handleClose();
+      setScore(0);
+      setReviewMessage('');
     }
   };
 

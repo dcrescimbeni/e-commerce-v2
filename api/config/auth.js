@@ -1,51 +1,55 @@
-const LocalStrategy = require('passport-local');
-const bcrypt = require('bcrypt');
 const passport = require('passport');
-const { User } = require('../models');
+const localStrategy = require('passport-local').Strategy;
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
-const verifyCallback = (email, password, done) => {
-  email = email.toLowerCase();
+passport.use(
+  'login',
+  new localStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ where: { email } });
 
-  User.findOne({ where: { email } })
-    .then((res) => {
-      console.log('found user?');
-      console.log(res);
-      if (!res) {
-        done(null, false);
-        return;
-      }
-      let user = res.dataValues;
-      bcrypt.compare(password, user.password).then((isValid) => {
-        if (isValid) {
-          console.log('password valid');
-          done(null, user);
-        } else {
-          done(null, false);
+        if (!user) {
+          return done(null, false, { message: 'User not found' });
         }
-      });
-    })
-    .catch((err) => done(err));
-};
 
-const strategy = new LocalStrategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password',
-  },
-  verifyCallback
+        const isValidPassword = bcrypt.compare(
+          password,
+          user.dataValues.password
+        );
+
+        if (!isValidPassword) {
+          return done(null, false, { message: 'Wrong Password' });
+        }
+
+        return done(null, user, { message: 'Logged in Successfully' });
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
 );
 
-passport.use(strategy);
+const JWTstrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 
-passport.serializeUser((user, done) => {
-  done(null, user.userId);
-});
-
-passport.deserializeUser((userId, done) => {
-  console.log('deserialize');
-  User.findByPk(userId)
-    .then((user) => {
-      done(null, user);
-    })
-    .catch((err) => done(err));
-});
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: 'TOP_SECRET',
+      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('token'),
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);

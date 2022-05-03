@@ -18,11 +18,15 @@ import {
   IconButton,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Carousel from 'react-material-ui-carousel';
 
 const ProductDetails = ({ onAdd }) => {
+  let navigate = useNavigate();
+
   //obtener id del producto a partir de la url
   let currentURL = window.location.href;
   let arrayURL = currentURL.split('/');
@@ -87,15 +91,33 @@ const ProductDetails = ({ onAdd }) => {
 
   return (
     <Container>
-      <Paper elevation={1} sx={{ paddingTop: 3, paddingBottom: 3 }}>
+      <Button
+        size="small"
+        variant="outlined"
+        startIcon={<ArrowLeftIcon />}
+        onClick={() => navigate(-1)}
+      >
+        Back
+      </Button>
+      <Paper
+        elevation={1}
+        sx={{ marginTop: 3, paddingTop: 3, paddingBottom: 3 }}
+      >
         <Grid container justifyContent="center" spacing={5}>
           <Grid item xs={12} md={6}>
             <Container>
-              <img
-                className="d-block w-100"
-                src={productInfo.img[0]}
-                alt="First slide"
-              />
+              <Carousel>
+                {productInfo.img.map((item, index) => {
+                  return (
+                    <img
+                      className="d-block w-100"
+                      src={item}
+                      alt="First slide"
+                      key={index}
+                    />
+                  );
+                })}
+              </Carousel>
             </Container>
           </Grid>
 

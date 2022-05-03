@@ -36,7 +36,7 @@ function LoginRegister() {
               navigate(`/login`);
             }}
           >
-            Login
+            Log in
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -53,7 +53,9 @@ function LoginRegister() {
 
   return (
     <ButtonGroup variant="text" color="clear">
-      <Button onClick={() => navigate('/login')}>Login</Button>
+      <Button sx={{ whiteSpace: 'nowrap' }} onClick={() => navigate('/login')}>
+        Log in
+      </Button>
       <Button
         sx={{ whiteSpace: 'nowrap' }}
         onClick={() => navigate('/register')}

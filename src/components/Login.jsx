@@ -177,7 +177,7 @@ const Login = () => {
                     <li>
                       <Link to="/login">
                         <a className="dropdown-item" href="#">
-                          Login
+                          Log in
                         </a>
                       </Link>
                     </li>

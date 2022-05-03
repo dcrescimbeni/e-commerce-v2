@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import WriteReview from './WriteReview';
+import { getSession } from '../state/user';
 
 import {
   Rating,
@@ -14,6 +15,8 @@ import {
   Divider,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const ProductDetails = ({ onAdd }) => {
   //obtener id del producto a partir de la url
@@ -32,6 +35,16 @@ const ProductDetails = ({ onAdd }) => {
   const [productInfo, setProductInfo] = useState({});
   const [rating, setRating] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSession());
+  }, [dispatch]);
+
+  const user = useSelector((state) => {
+    return state.user;
+  });
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -108,13 +121,18 @@ const ProductDetails = ({ onAdd }) => {
               <Divider />
               <br />
               <Typography variant="h4">Reviews</Typography>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={handleClickOpen}
-              >
-                Write a review
-              </Button>
+
+              {user.firstName ? (
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={handleClickOpen}
+                >
+                  Write a review
+                </Button>
+              ) : (
+                <Link to="/login">Log in to write a review</Link>
+              )}
               <WriteReview
                 openDialog={openDialog}
                 handleClose={handleClose}

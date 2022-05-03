@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../Hooks/useInputs';
-import { sendLogoutRequest } from '../state/user';
 import { sendLoginRequest } from '../state/user';
-import { GiConverseShoe } from 'react-icons/gi';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { CgProfile } from 'react-icons/cg';
 import style from '../styles/Login.module.css';
 import { getSession } from '../state/user';
 
@@ -16,11 +12,6 @@ const Login = () => {
   const inputPassword = useInput();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleClick = () => {
-    dispatch(sendLogoutRequest());
-  };
 
   React.useEffect(() => {
     dispatch(getSession());
@@ -39,16 +30,6 @@ const Login = () => {
     dispatch(sendLoginRequest(form));
     if (user) navigate('/');
   };
-
-  const handleSearchSubmit = async (e) => {
-    e.preventDefault();
-    navigate(`/search?query=${searchTerm}`);
-  };
-
-  // const Submit = (e) => {
-  //   e.preventDefault();
-  //   navigate("/")
-  // };
 
   return (
     <div className={style.masthead}>

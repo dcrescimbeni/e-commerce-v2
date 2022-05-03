@@ -13,8 +13,12 @@ import {
   Card,
   CardContent,
   Divider,
+  Alert,
+  Collapse,
+  IconButton,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -35,6 +39,7 @@ const ProductDetails = ({ onAdd }) => {
   const [productInfo, setProductInfo] = useState({});
   const [rating, setRating] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -107,12 +112,35 @@ const ProductDetails = ({ onAdd }) => {
               >
                 <Button
                   variant="contained"
-                  onClick={() => onAdd(productInfo)}
+                  onClick={() => {
+                    setOpenAlert(true);
+                    onAdd(productInfo);
+                  }}
                   startIcon={<AddShoppingCartIcon />}
                 >
                   Add to Cart
                 </Button>
               </Container>
+              <br />
+              <Collapse in={openAlert}>
+                <Alert
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpenAlert(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2 }}
+                >
+                  Product added to the cart
+                </Alert>
+              </Collapse>
             </Container>
           </Grid>
 
@@ -121,7 +149,6 @@ const ProductDetails = ({ onAdd }) => {
               <Divider />
               <br />
               <Typography variant="h4">Reviews</Typography>
-
               {user.firstName ? (
                 <Button
                   color="secondary"

@@ -6,13 +6,16 @@ import { Button, Menu, MenuItem } from '@mui/material';
 import { Box } from '@mui/system';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-const NavigationMenu = () => {
+const NavigationMenu = ({ closeParentMenu }) => {
   let navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
-  const handleMenuClose = () => setAnchorEl(null);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    closeParentMenu();
+  };
   const handleMenuClick = (category) => {
     navigate(`/${category}`);
     handleMenuClose();

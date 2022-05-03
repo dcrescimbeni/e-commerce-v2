@@ -38,7 +38,7 @@ const ShoppingCart = ({ onAdd, onRemove, onDelete, cartItems }) => {
                           </div>
                           {cartItems.length > 0 && (
                             <h6 className="mb-0 text-muted">
-                              {cartItems.length} articulos
+                              {cartItems.length} items
                             </h6>
                           )}
                         </div>

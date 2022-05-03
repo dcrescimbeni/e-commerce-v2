@@ -29,8 +29,6 @@ const NavBarV2 = () => {
   }, [dispatch]);
 
   const user = useSelector((state) => {
-    console.log('user state');
-    console.log(state.user);
     return state.user;
   });
 

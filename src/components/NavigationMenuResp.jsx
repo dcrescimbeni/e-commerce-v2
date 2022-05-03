@@ -29,7 +29,7 @@ const NavigationMenuResp = () => {
         Menu
       </Button>
       <Menu open={open} onClose={handleMenuClose} anchorEl={anchorEl}>
-        <NavigationMenu />
+        <NavigationMenu closeParentMenu={handleMenuClose} />
       </Menu>
     </Box>
   );

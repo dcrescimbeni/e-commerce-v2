@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import NavBar from '../components/NavBar';
 
 const Thanks = ({ cartItems, setCartItems }) => {
   const handleStorage = () => {
@@ -14,9 +13,6 @@ const Thanks = ({ cartItems, setCartItems }) => {
 
   return (
     <div>
-      <br />
-      <br />
-      <br />
       <section className="container mt-5">
         <div className="card-body">
           <div className="jumbotron text-center">
@@ -35,22 +31,6 @@ const Thanks = ({ cartItems, setCartItems }) => {
           </div>
         </div>
       </section>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 };
